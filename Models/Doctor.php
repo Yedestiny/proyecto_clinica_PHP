@@ -1,67 +1,87 @@
 <?php
-namespace Models;
 
-class Doctor {
+
+
+class Doctor
+{
 
     function __construct(
-        private string $id,
-        private string $nombre,
-        private string $apellidos,
-        private string $telefono,
-        private string $especialidad,
-              
-    ){}
+  
 
-    public function getId(): int{
+        public  $servidor = "127.0.0.1",
+        public  $usuario = "angel",
+        public  $pass = "angel",
+        public  $nombre_bd = "miclinica",
+
+
+    ) {
+    }
+
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function setId(int $id){
+    public function setId(int $id)
+    {
         $this->id = $id;
     }
 
-    public function getNombre(): string{
+    public function getNombre(): string
+    {
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre){
+    public function setNombre(string $nombre)
+    {
         $this->nombre = $nombre;
     }
 
-    public function getApellidos(): string{
+    public function getApellidos(): string
+    {
         return $this->apellidos;
     }
 
-    public function setApellidos(string $apellidos){
+    public function setApellidos(string $apellidos)
+    {
         $this->apellidos = $apellidos;
     }
-   
-    public function getTelefono(): string{
+
+    public function getTelefono(): string
+    {
         return $this->telefono;
     }
 
-    public function setTelefono(string $telefono){
+    public function setTelefono(string $telefono)
+    {
         $this->telefono = $telefono;
     }
-       
-    public function getEspecialidad(): string{
+
+    public function getEspecialidad(): string
+    {
         return $this->especialidad;
     }
-
+    public function ver_doctores()
+    {
+        $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
+        $query = "SELECT * FROM doctores";
+        $result = mysqli_query($con, $query);
+        $fila =   mysqli_fetch_all($result);
     
+        return $fila;
+    }
 
-    public static function fromArray(array $data): Doctor {
+
+
+    public static function fromArray(array $data): Doctor
+    {
         return new Doctor(
             $data['id'],
             $data['nombre'],
             $data['apellidos'],
             $data['telefono'],
             $data['especialidad'],
-            
+
         );
-        /* Este método nos permite hacer la correspondencia o mapeo de cada
-         * array de un registro obtenido de la consulta de la base de datos
-         * a un objeto Doctor
-         */
     }
 }

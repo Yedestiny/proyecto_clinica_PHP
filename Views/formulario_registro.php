@@ -1,5 +1,5 @@
 
-<div style="background-color: beige;">
+<div >
     <form action="controllers/validar_inicio_sesion.php" method="POST">
         <h1>Inicio de Sesion</h1>
         <p>Usuario</p>
@@ -10,7 +10,7 @@
         <br>
         <input id="enviar" value="Enviar" type="submit" class="boton_form"> <br>
 
-        <a href="Views/form_registrar_usuario.php"><input type="button" value="Registar Usuario" class="boton_form"></a> <br>
+        <a href="./index.php?pag=3"><input type="button" value="Registar Usuario" class="boton_form"></a> <br>
 
 
     </form>

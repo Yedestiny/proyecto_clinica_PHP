@@ -8,10 +8,10 @@
             <td>Especialidad</td>
         </tr>
         <?php
-        require_once('./Models/BaseDatos.php');
-        $bd = new BaseDatos();
-        $bd->ver_doctores()
-        ?>
+        require_once('./Controllers/ver_doctores.php');
+        foreach ($fila as $doctor) {
+            echo "<tr><td>" . $doctor[1] . "</td><td>" . $doctor[2] . "</td><td>" . $doctor[3] . "</td><td>" . $doctor[4] . "</td></tr>";
+        }?>
     </table>
 
 </div>

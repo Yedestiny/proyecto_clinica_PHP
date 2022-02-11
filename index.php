@@ -12,7 +12,7 @@
 <body>
     <div class="cabecera">
         <img src="https://thumbs.dreamstime.com/b/m%C3%A9dico-saludable-coraz%C3%B3n-cruza-cl%C3%ADnicas-personas-sanas-dise%C3%B1o-del-logo-de-atenci%C3%B3n-vida-icono-sobre-fondo-blanco-m%C3%A9dica-161525466.jpg">
-        <h1>Clinica Angel</h1>
+         <a href="index.php"><h1>Clinica Angel</h1></a>
     </div>
 
     <div class="contenido">
@@ -36,6 +36,10 @@
                 require_once('Views/vista_doctores.php');
             } elseif ($_GET['pag'] == 2) {
                 require_once('Views/micuenta.php');
+            }elseif($_GET['pag']==3){
+                require_once('Views/form_registrar_usuario.php');
+            }elseif($_GET['pag']==4){
+                require_once('Views/ver_citas.php');
             }
         } else {
             require_once('Views/sin_iniciar_sesion.php');

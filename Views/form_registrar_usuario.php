@@ -1,3 +1,4 @@
+<div style="margin-left: 2vh; background-color: beige; width: 200vh;padding-left: 2vh;">
 <form class="caja" method="POST" action="./../Controllers/validar_nuevo_usuario.php">
 
     <p class="centrado">Resgistrar usuario</p>
@@ -24,3 +25,4 @@
     <p><input type="submit" value="Registrar" id="registrar_nuevo"> <input type="reset" value="Limpiar" id="limpiar_nuevo"></p>
 
 </form>
+</div>

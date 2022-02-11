@@ -3,7 +3,6 @@ require_once('Doctor.php');
 require_once('Paciente.php');
 class BaseDatos
 {
-  public mixed $resultado; //mixed novedad en PHP cualquier valor
 
   function __construct(
     public  $servidor = "127.0.0.1",
@@ -41,14 +40,7 @@ class BaseDatos
       header('Location: index.php');
     }
   }
-  public function micuenta($correo)
-  {
-    $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-    $query = "SELECT * FROM pacientes WHERE correo='$correo'";
-    $result = mysqli_query($con, $query);
-    $cuenta =   mysqli_fetch_all($result);
-    return $cuenta;
-  }
+
   public function cerrar_sesion()
   {
     session_start();
@@ -70,17 +62,7 @@ class BaseDatos
     $usuario_encontrado = mysqli_query($con, $comprobar_usuario);
     return $usuario_encontrado;
   }
-  public function ver_doctores()
-  {
-    $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-    $query = "SELECT * FROM doctores";
-    $result = mysqli_query($con, $query);
-    $fila =   mysqli_fetch_all($result);
-
-    foreach ($fila as $doctor) {
-      echo "<tr><td>" . $doctor[1] . "</td><td>" . $doctor[2] . "</td><td>" . $doctor[3] . "</td><td>" . $doctor[4] . "</td></tr>";
-    }
-  }
+ 
 
   public function validar_usuario($correo, $password)
   {
@@ -103,7 +85,6 @@ class BaseDatos
   {
     if ($this->validar_usuario($supuesto_usuario, $supuesta_password) == true) {
       session_start();
-      include("iniciar_sesion.php");
       $this->iniciar_sesion($supuesto_usuario);
       header("Location: ./../index.php?pag=1");
     } else {

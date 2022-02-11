@@ -3,13 +3,13 @@
 
 class Paciente
 {
-
-    private string $id;
-    private string $nombre;
-    private string $apellidos;
-    private string $correo;
-    private string $password;
-
+    function __construct(
+        public  $servidor = "127.0.0.1",
+        public  $usuario = "angel",
+        public  $pass = "angel",
+        public  $nombre_bd = "miclinica",
+      ) {
+      }
     public function extraer_info()
     {
     }
@@ -61,5 +61,20 @@ class Paciente
     public function setPassword(string $password)
     {
         $this->password = $password;
+    }
+    public function micuenta($correo)
+    {
+      $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
+      $query = "SELECT * FROM pacientes WHERE correo='$correo'";
+      $result = mysqli_query($con, $query);
+      $cuenta =   mysqli_fetch_all($result);
+      return $cuenta;
+    }
+    public function citas($correo_paciente){
+        $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
+        $query = "select pacientes.nombre,doctores.nombre,citas.fecha,citas.hora from citas,doctores,pacientes where citas.paciente_id = pacientes.id and citas.doctor_id = doctores.id and pacientes.correo ='$correo_paciente'";
+        $result = mysqli_query($con, $query);
+        $citas =   mysqli_fetch_all($result);
+        return $citas;
     }
 }
