@@ -1,5 +1,5 @@
 <div class="tabla_doctores">
-    <h1>Lista de Doctores</h1>
+    <h1>Citas</h1>
     <table>
         <tr>
             <td>Paciente</td>

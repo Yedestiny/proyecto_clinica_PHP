@@ -40,6 +40,8 @@
                 require_once('Views/form_registrar_usuario.php');
             }elseif($_GET['pag']==4){
                 require_once('Views/ver_citas.php');
+            }elseif($_GET['pag']==5){
+                require_once('Views/nueva_cita.php');
             }
         } else {
             require_once('Views/sin_iniciar_sesion.php');
