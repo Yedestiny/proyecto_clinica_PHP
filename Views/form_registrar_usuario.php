@@ -1,5 +1,5 @@
 <div style="margin-left: 2vh; background-color: beige; width: 200vh;padding-left: 2vh;">
-<form class="caja" method="POST" action="./../Controllers/validar_nuevo_usuario.php">
+<form class="caja" method="POST" action="./Controllers/validar_nuevo_usuario.php">
 
     <p class="centrado">Resgistrar usuario</p>
     <p>
