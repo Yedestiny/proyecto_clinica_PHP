@@ -70,6 +70,14 @@ class Doctor
     
         return $fila;
     }
+    public function obtener_id_doctor($nombre_doctor){
+        $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
+        $query = "SELECT doctores.id from citas,doctores where doctores.id = citas.doctor_id and doctores.nombre='$nombre_doctor'";
+        $result = mysqli_query($con, $query);
+        $id =   mysqli_fetch_all($result);
+        return $id;       
+
+    }
 
 
 
@@ -84,4 +92,5 @@ class Doctor
 
         );
     }
+    
 }
