@@ -63,20 +63,31 @@ class Doctor
     }
     public function ver_doctores()
     {
-        $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-        $query = "SELECT * FROM doctores";
-        $result = mysqli_query($con, $query);
-        $fila =   mysqli_fetch_all($result);
-    
-        return $fila;
+        try {
+            $con = new PDO("mysql:host=localhost;bdname=miclinica", 'angel', 'angel');
+            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $con->exec("SET CHARACTER SET utf8");
+            $sql = "SELECT * FROM miclinica.doctores";
+            $resultado = $con->prepare($sql);
+            $resultado->execute(array());
+            return $resultado;
+            
+        } catch (Exception $e) {
+            echo "Error: " . $e;
+        }
     }
     public function obtener_id_doctor($nombre_doctor){
-        $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-        $query = "SELECT doctores.id from citas,doctores where doctores.id = citas.doctor_id and doctores.nombre='$nombre_doctor'";
-        $result = mysqli_query($con, $query);
-        $id =   mysqli_fetch_all($result);
-        return $id;       
-
+        
+        try {
+            $con = new PDO("mysql:host=localhost;bdname=miclinica", 'angel', 'angel');
+            $sql = "SELECT doctores.id from miclinica.citas,miclinica.doctores where doctores.id = citas.doctor_id and doctores.nombre=?";
+            $insert = $con->prepare($sql);
+            $insert->execute([$nombre_doctor]);
+            $id = $insert->fetchAll(PDO::FETCH_COLUMN, 0);
+            return $id;
+        } catch (Exception $e) {
+            echo "Error: " . $e;
+        }
     }
 
 

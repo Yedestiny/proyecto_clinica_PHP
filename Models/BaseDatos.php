@@ -13,7 +13,6 @@ class BaseDatos
   }
   public function validar_email($email)
   {
-
     $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
 
     $comprobar_usuario = "SELECT * FROM pacientes WHERE email = '$email'";
@@ -27,9 +26,14 @@ class BaseDatos
   }
   public function insertar_usuario($nombre, $apellidos, $correo, $contraseña)
   {
-    $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-    $insert = "INSERT INTO pacientes (nombre,apellidos,correo,password) VALUES ('$nombre','$apellidos','$correo','$contraseña')";
-    $con->query($insert);
+    try {
+      $con = new PDO("mysql:host=localhost;bdname=miclinica", 'angel', 'angel');
+      $sql = "INSERT INTO miclinica.pacientes (nombre,apellidos,correo,password) VALUES (?,?,?,?)";
+      $insert = $con->prepare($sql);
+      $insert->execute([$nombre, $apellidos, $correo, $contraseña]);
+    } catch (Exception $e) {
+      echo "Error: " . $e;
+    }
   }
   public function nuevo_usuario($nombre_nuevo, $apellidos_nuevos, $email_nuevo, $contraseña_nueva)
   {
@@ -37,7 +41,7 @@ class BaseDatos
       $this->insertar_usuario($nombre_nuevo, $apellidos_nuevos, $email_nuevo, $contraseña_nueva);
       header('Location: ./../index.php');
     } else {
-      header('Location: index.php');
+      header('Location: ./../index.php');
     }
   }
 
@@ -57,23 +61,37 @@ class BaseDatos
 
   public function info_paciente($paciente)
   {
-    $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-    $comprobar_usuario = "SELECT * FROM pacientes WHERE nombre = '$paciente'";
-    $usuario_encontrado = mysqli_query($con, $comprobar_usuario);
-    return $usuario_encontrado;
+    try {
+      $con = new PDO("mysql:host=localhost;bdname=miclinica", 'angel', 'angel');
+      $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $con->exec("SET CHARACTER SET utf8");
+      $sql = "SELECT * FROM miclinica.pacientes WHERE nombre = ?";
+      $resultado = $con->prepare($paciente);
+      $resultado->execute(array());
+      return $resultado;
+    } catch (Exception $e) {
+      echo "Error: " . $e;
+    }
   }
- 
+
 
   public function validar_usuario($correo, $password)
   {
-    $con = new mysqli($this->servidor, "angel", "angel", $this->nombre_bd);
-    $comprobar_usuario = "SELECT * FROM pacientes WHERE correo = '$correo' AND password = '$password'";
-    $buscar_usuario = mysqli_query($con, $comprobar_usuario);
 
-    if ($buscar_usuario && mysqli_num_rows($buscar_usuario) >= 1) {
-      return true;
-    } else {
-      return false;
+    try {
+      $con = new PDO("mysql:host=localhost;bdname=miclinica", 'angel', 'angel');
+      $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $con->exec("SET CHARACTER SET utf8");
+      $sql = "SELECT * FROM miclinica.pacientes WHERE correo = ? AND password = ?";
+      $resultado = $con->prepare($sql);
+      $resultado->execute(array($correo, $password));
+      if ($resultado && $resultado->fetchColumn() >= 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (Exception $e) {
+      echo "Error: " . $e;
     }
   }
   public function iniciar_sesion($supuesto_usuario)
